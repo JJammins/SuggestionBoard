@@ -1,0 +1,53 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="proposal-list">
+	
+	<div class="button-group">
+		<h3>분류</h3>
+	    <div class="classification-group">
+	        <button class="c-button" type="button" data-classification="시설/장비">시설/장비</button>
+	        <button class="c-button" type="button" data-classification="구매신청">구매신청</button>
+	        <button class="c-button" type="button" data-classification="개방신청">개방신청</button>
+	        <button class="c-button" type="button" data-classification="취업상담">취업상담</button>
+	    </div>
+	</div>
+
+    <div class="table_list">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">분류</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성일</th>
+                    <th scope="col">답변여부</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="proposal: ${classificationList}">
+                    <td th:text="${proposal.classification}"></td>
+                    <td>
+                        <a th:href="@{|/proposal/detail/${proposal.id}|}" th:text="${proposal.subject}"></a>
+                    </td>
+                    <td th:text="${proposal.createDate}"></td>
+                    <td class="status" th:text="${proposal.isAnswered ? '완료' : '대기'}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOMContentLoaded');
+            const buttons = document.querySelectorAll('.button-group button');
+
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const classification = this.getAttribute('data-classification');
+                    const url = `/proposal/classification?classification=${classification}`;
+                    window.location.href = url;
+                });
+            });
+        });
+    </script>
+
+</div>
+</html>

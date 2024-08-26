@@ -1,0 +1,9 @@
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content">
+		<div th:replace="~{carousel :: carouselFragment}"></div>
+        <h2>아마도 메인 페이지가 될 듯한?!</h2>
+        <h4>
+            <a th:href="@{proposal/list}" th:text="질문목록"></a>
+        </h4>
+    </div>
+</html>

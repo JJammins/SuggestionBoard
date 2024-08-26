@@ -1,0 +1,29 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="form-container">
+	<div class="test">
+	    <form th:action="@{/proposal/create}" th:object="${proposalForm}" method="post">
+	        <div class="one-line">
+	            <div class="form-group subject">
+	                <input type="text" id="subject" th:field="*{subject}" class="form-control" placeholder="제목">
+	                <p class="error" th:if="${#fields.hasErrors('subject')}" th:errors="*{subject}"></p>
+	            </div>
+	            <div class="form-group classification">
+	                <select id="classification" th:field="*{classification}">
+	                    <option value="시설/장비">시설/장비</option>
+	                    <option value="개방신청">개방신청</option>
+	                    <option value="구매신청">구매신청</option>
+	                    <option value="취업상담">취업상담</option>
+	                </select>
+	            </div>
+	        </div>
+	        <div class="form-group content">
+	            <textarea rows="10" th:field="*{content}" class="form-control" placeholder="내용"></textarea>
+	            <p class="error" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></p>
+	        </div>
+	        <div class="register">
+	            <input class="btn btn-primary" type="submit" value="등록하기">
+	        </div>
+	    </form>
+	</div>
+</div>
+</html>

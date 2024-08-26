@@ -1,0 +1,293 @@
+html{
+    height: 100vh;
+}
+body{
+    margin: auto;
+    padding: auto;    
+}
+
+/* 네비게이션바 */
+.top-bar {
+    height: 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3e4e40;
+    color: white;
+}
+
+.title{
+    font-size: 24px;
+    margin-right: 20px;
+    padding-left: 20px;
+}
+
+.write {
+    margin-right: auto;
+}
+.login {
+    margin-right: 20px;
+}
+
+a {
+    text-decoration: none; color: inherit;
+    margin-left: 20px;
+}
+
+#nick {
+    text-decoration: underline; color: inherit;
+}
+
+table {
+	width: 70%;
+}
+
+/* 건의목록 css */
+.proposal-list{
+	text-align: center;
+	margin: 0 auto;
+}
+
+.table_list{
+	width: 70%;
+	margin: 0 auto;
+}
+
+.proposal-tabs {
+    display: flex;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+    justify-content: space-evenly;
+    text-align: center;
+}
+
+.proposal-tabs .tab {
+    padding: 10px 20px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    font-size: 16px;
+    color: #495057;
+    transition: all 0.3s ease;
+}
+
+.proposal-tabs .tab:hover {
+    color: #007bff;
+}
+
+.proposal-tabs .tab.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+    font-weight: bold;
+}
+
+/* 건의하기 css */
+html {
+    height: 100vh;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* 폼 스타일 */
+.form-container {
+    width: 60%;
+    margin: 70px auto;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.test{
+	margin: 0 auto;
+	width: 80%;
+}
+
+.one-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    width: 100%;
+}
+
+.subject {
+    flex: 7;
+}
+
+.classification {
+    flex: 3;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group p {
+    margin: 0;
+}
+
+.form-control, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus, select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+textarea.form-control {
+    resize: none;
+}
+
+p.error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.register {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+/* 상세페이지 css */
+.proposal-detail {
+    max-width: 800px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #ffffff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 제목 영역 */
+.proposal-header {
+    margin-bottom: 20px;
+}
+
+.proposal-header h1 {
+    font-size: 28px;
+    color: #343a40;
+    border-bottom: 2px solid #dee2e6;
+    padding-bottom: 10px;
+}
+
+/* 내용 영역 */
+.proposal-content {
+    margin-bottom: 20px;
+}
+
+.proposal-content p {
+    font-size: 16px;
+    color: #495057;
+    line-height: 1.5;
+}
+
+/* 답변 리스트 */
+.proposal-answers {
+    margin-bottom: 20px;
+}
+
+.proposal-answers ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.proposal-answers li {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    font-size: 14px;
+    color: #495057;
+}
+
+/* 폼 스타일 */
+.proposal-form {
+    margin-top: 20px;
+}
+
+.answer {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    font-size: 14px;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    resize: none;
+    margin-bottom: 10px;
+	
+}
+
+textarea:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+/* 버튼 스타일 */
+.btn-primary {
+    background-color: rgb(0, 0, 0);
+    border-color: rgb(0, 0, 0);
+    color: white;
+    padding: 10px 20px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: rgb(192, 192, 192);
+    border-color: rgb(192, 192, 192);
+}
+
+/* 분류별 건의보기 css */
+.button-group{
+	margin: 50px 0px;
+}
+
+.classification-group{
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap;
+	border: 5px solid #3e4e40;
+	width: 60%;
+	padding: 50px 0px;
+}
+
+.c-button{
+	height: 50px;
+	background-color:  #3e4e40;
+	border-radius: 10%;
+	color: white;
+}

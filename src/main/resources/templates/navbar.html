@@ -1,0 +1,20 @@
+<div th:fragment="navbarFragment" class="top-bar">
+	<div class="title">
+		<a th:href="@{/main}">
+			<img src="logo.jpg" alt="logo" width="30" height="24">
+			미래융합교육원
+		</a>
+	</div>
+	<div class="">
+		<a>공지사항</a>
+	</div>
+	<div class="list">
+		<a th:href="@{/proposal/list}">건의목록</a>
+	</div>
+	<div class="write">
+		<a th:href="@{/proposal/create}">건의하기</a>
+	</div>
+	<div>
+		<a class="login">로그인</a>
+	</div>
+</div>

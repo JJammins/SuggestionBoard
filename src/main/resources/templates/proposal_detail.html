@@ -1,0 +1,24 @@
+<html layout:decorate="~{layout}">
+    <div layout:fragment="content" class="proposal-detail">
+        <section class="proposal-header">
+            <h1 th:text="${proposal.subject}"></h1>
+        </section>
+        <section class="proposal-content">
+            <p th:text="${proposal.content}"></p>
+        </section>
+        <section class="proposal-answers">
+            <ul>
+                <li th:each="answer : ${proposal.answerList}" th:text="${answer.content}"></li>
+            </ul>
+        </section>
+        <section class="proposal-form">
+            <form th:action="@{|/answer/create/${proposal.id}|}" th:object="${answerForm}" method="post">
+                <textarea class="answer" th:field="*{content}" id="answerContent" rows="10" placeholder="답변을 작성하세요..."></textarea>
+                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-message"></p>
+				<div class="register">
+				    <input class="btn btn-primary" type="submit" value="등록하기">
+				</div>
+            </form>
+        </section>
+    </div>
+</html>
