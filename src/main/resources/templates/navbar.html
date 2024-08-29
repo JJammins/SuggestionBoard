@@ -1,12 +1,8 @@
 <div th:fragment="navbarFragment" class="top-bar">
 	<div class="title">
 		<a th:href="@{/main}">
-			<img src="logo.jpg" alt="logo" width="30" height="24">
-			미래융합교육원
+			<img src="http://localhost:8080/%EB%AF%B8%EB%9E%98%EC%9C%B5%ED%95%A9%EA%B5%90%EC%9C%A1%EC%9B%90.png" alt="logo" width="250">
 		</a>
-	</div>
-	<div class="">
-		<a>공지사항</a>
 	</div>
 	<div class="list">
 		<a th:href="@{/proposal/list}">건의목록</a>
@@ -15,6 +11,7 @@
 		<a th:href="@{/proposal/create}">건의하기</a>
 	</div>
 	<div>
-		<a class="login">로그인</a>
+		<a class="login" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+        <a class="login" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
 	</div>
 </div>

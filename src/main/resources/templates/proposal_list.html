@@ -1,76 +1,131 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="proposal-list">
     <div th:replace="~{carousel :: carouselFragment}"></div>
-    
+
     <div class="proposal-tabs">
         <a href="#" class="tab active" data-tab="latest">최신순 건의보기</a>
         <a href="#" class="tab" data-tab="unanswered">답변대기</a>
         <a href="#" class="tab" data-tab="answered">답변완료</a>
         <a th:href="@{/proposal/classification?classification=}" class="tab" data-tab="category">분류별 건의보기</a>
     </div>
-
+	
     <div class="table_list">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">분류</th>
-                    <th scope="col">제목</th>
-                    <th scope="col">작성일</th>
-                    <th scope="col">답변여부</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="proposal-row" th:each="proposal: ${proposalList}">
-                    <td th:text="${proposal.classification}"></td>
-                    <td>
-                        <a th:href="@{|/proposal/detail/${proposal.id}|}" th:text="${proposal.subject}"></a>
-                    </td>
-                    <td th:text="${proposal.createDate}"></td>
-                    <td class="status" th:text="${proposal.isAnswered ? '완료' : '대기'}"></td>
-                </tr>
-            </tbody>
-        </table>
+		<table class="table">
+		</table>
     </div>
+	<script th:inline="javascript">
+	/*<![CDATA[*/
+	var proposals = /*[[${proposalList}]]*/ [];
+	console.log("proposals", proposals); // 확인용
+	
+	const tableContainer = document.querySelector(".table")
+	const columns = ["분류", "제목", "작성일", "작성자", "답변 여부"]
+	
+	// <thead> 생성
+	const thead = document.createElement("thead")
+	const headerRow = document.createElement("tr")
+	
+	// 각 컬럼에 대한 <th> 생성 및 추가
+	columns.forEach(function(item){
+		const th = document.createElement("th")
+		th.textContent = item
+		th.scope = "col"
+		headerRow.append(th)
+	})
+	
+	// <thead>에 <tr> 추가
+	thead.append(headerRow)
+	
+	// <table>에 <thead> 추가
+	tableContainer.append(thead)
+	
+	// <tbody> 생성
+	const tbody = document.createElement("tbody")
 
+	
+	proposals.forEach(function(aProposal){
+		const tr = document.createElement("tr")
+		tr.classList.add("proposal-row")
+		
+		// 분류 
+		const td1 = document.createElement("td")
+		td1.textContent = aProposal.classification
+		tr.append(td1)
+
+		// 제목 
+		const td2 = document.createElement("td")
+		const a1 = document.createElement("a")
+		a1.href = `/proposal/detail/${aProposal.id}`
+		a1.textContent = aProposal.subject
+		td2.append(a1)
+		tr.append(td2)
+		
+		// 작성일
+		const td3 = document.createElement("td")
+		td3.textContent = new Date(aProposal.createDate).toLocaleDateString();
+		tr.append(td3)
+
+		// 작성자
+		const td4 = document.createElement("td");
+		if (aProposal.author && aProposal.author.username) {
+		    td4.textContent = aProposal.author.username;
+		} else {
+		    td4.textContent = "익명"; // 작성자가 없는 경우
+		}
+		tr.append(td4);
+		
+		// 완료 여부
+		const td5 = document.createElement("td")
+		td5.classList.add("status")
+		td5.textContent = aProposal.answered ? '완료' : '대기'
+		tr.append(td5)
+		
+		tbody.append(tr)
+	})
+	
+	tableContainer.append(tbody)
+	
+	/*]]>*/
+	</script>
     <script>
-        window.addEventListener("load", function() {
-            console.log('DOMContentLoaded');
-            const tabs = document.querySelectorAll('.proposal-tabs .tab');
-            
-            tabs.forEach(tab => {
-                tab.addEventListener('click', function(event) {
-                    tabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const tabType = this.getAttribute('data-tab');
-                    console.log('Selected tab:', tabType);
+    window.addEventListener("load", function() {
+        console.log('DOMContentLoaded');
+        const tabs = document.querySelectorAll('.proposal-tabs .tab');
 
-                    const rows = document.querySelectorAll('.proposal-row');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function(event) {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
 
-                    rows.forEach(row => {
-                        const statusCell = row.querySelector('.status');
-						if (statusCell) {
-							const statusText = statusCell.textContent.trim();
-							if (tabType === 'unanswered') {
-							    if (statusText === '대기') {
-							        row.style.display = '';
-							    } else {
-							        row.style.display = 'none';
-							    }
-							} else if (tabType === 'answered') {
-							    if (statusText === '완료') {
-							        row.style.display = '';
-							    } else {
-							        row.style.display = 'none';
-							    }
-							} else {
-							    row.style.display = '';
-							}
-						}
-                    });
+                const tabType = this.getAttribute('data-tab');
+                console.log('Selected tab:', tabType);
+
+                const rows = document.querySelectorAll('.proposal-row');
+
+                rows.forEach(row => {
+                    const statusCell = row.querySelector('.status');
+                    if (statusCell) {
+                        const statusText = statusCell.textContent.trim();
+                        if (tabType === 'unanswered') {
+                            if (statusText === '대기') {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        } else if (tabType === 'answered') {
+                            if (statusText === '완료') {
+                                row.style.display = '';
+                            } else {
+                                row.style.display = 'none';
+                            }
+                        } else {
+                            row.style.display = '';
+                        }
+                    }
                 });
             });
         });
+    });
     </script>
 
 </div>

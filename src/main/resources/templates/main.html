@@ -1,9 +1,53 @@
 <html layout:decorate="~{layout}">
-    <div layout:fragment="content">
-		<div th:replace="~{carousel :: carouselFragment}"></div>
-        <h2>아마도 메인 페이지가 될 듯한?!</h2>
-        <h4>
-            <a th:href="@{proposal/list}" th:text="질문목록"></a>
-        </h4>
+<div layout:fragment="content">
+    <div th:replace="~{carousel :: carouselFragment}" style="height: 100%"></div>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title text-center">미래융합교육원</h5>
+                                <a href="https://mcea.co.kr/" class="main-btn mt-2 align-self-center">바로가기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title text-center">공지사항</h5>
+                                <a href="https://mcea.co.kr/sub6-1" class="main-btn mt-2 align-self-center">바로가기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title text-center">교육과정 소개</h5>
+                                <a href="https://mcea.co.kr/sub2-1" class="main-btn mt-2 align-self-center">바로가기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title text-center">교육원 소개</h5>
+                                <a href="https://mcea.co.kr/sub1-1_1" class="main-btn mt-2 align-self-center">바로가기</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card h-100">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <h5 class="card-title text-center">건의목록</h5>
+                                <a th:href="@{/proposal/list}" class="main-btn mt-2 align-self-center">바로가기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 </html>

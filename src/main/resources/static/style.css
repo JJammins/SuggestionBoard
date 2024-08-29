@@ -8,24 +8,32 @@ body{
 
 /* 네비게이션바 */
 .top-bar {
-    height: 60px;
+    height: 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #3e4e40;
     color: white;
+    flex-wrap: nowrap;
 }
 
 .title{
-    font-size: 24px;
     margin-right: 20px;
     padding-left: 20px;
+    padding-bottom: 10px;
 }
 
-.write {
-    margin-right: auto;
+.list{
+	font-size: 18px;
 }
+
+.write{
+    margin-right: auto;
+    font-size: 18px;
+}
+
 .login {
+    font-size: 18px;
     margin-right: 20px;
 }
 
@@ -165,6 +173,16 @@ p.error {
     box-sizing: border-box;
 }
 
+span.error {
+    color: #e74c3c;
+    font-size: 12px;
+    margin-top: 5px;
+    bottom: -20px;
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
 .register {
     display: flex;
     justify-content: flex-end;
@@ -203,6 +221,11 @@ p.error {
     font-size: 16px;
     color: #495057;
     line-height: 1.5;
+}
+
+.crud-btn{
+	display: flex;
+	justify-content: end;
 }
 
 /* 답변 리스트 */
@@ -290,4 +313,45 @@ textarea:focus {
 	background-color:  #3e4e40;
 	border-radius: 10%;
 	color: white;
+}
+
+/* 기본 버튼 스타일 */
+.card {
+    transition: transform 0.3s;
+}
+.card:hover {
+    transform: translateY(-5px);
+}
+.main-btn {
+    background-color: #3e4e40;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    margin: 0 auto;
+}
+.main-btn:hover {
+    background-color: #2c3a2e;
+    color: white;
+}
+
+.bottom {
+  position: relative; /* 기본값은 static이므로, 굳이 명시하지 않아도 됨 */
+  width: 100%;
+  margin-top: 20px; /* 페이지의 다른 내용과 조금 떨어져 있도록 간격을 줄 수 있음 */
+}
+
+.page-bottom {
+  margin: 0 auto;
+  padding: 10px 40px;
+  color: rgb(159, 152, 149);
+}
+
+.bottom-title{
+	color: black;
+}
+.bottom_span {
+  display: block;
+  margin-bottom: 5px;
 }

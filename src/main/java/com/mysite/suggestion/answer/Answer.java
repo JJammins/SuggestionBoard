@@ -3,6 +3,7 @@ package com.mysite.suggestion.answer;
 import java.time.LocalDateTime;
 
 import com.mysite.suggestion.proposal.Proposal;
+import com.mysite.suggestion.user.SiteUser;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -22,9 +23,9 @@ public class Answer {
 	
 	private String content;
 	
-	private LocalDateTime create_date;
+	private LocalDateTime createDate;
 	
-	private LocalDateTime update_date;
+	private LocalDateTime updateDate;
 	
 	@ManyToOne
 	private Proposal proposal;
@@ -35,4 +36,7 @@ public class Answer {
 			proposal.setIsAnswered(true);
 		}
 	}
+	
+	@ManyToOne
+	private SiteUser author;
 }

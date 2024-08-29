@@ -6,19 +6,71 @@
         <section class="proposal-content">
             <p th:text="${proposal.content}"></p>
         </section>
+        <div class="d-flex justify-content-end">
+            <div class="badge bg-light text-dark p-2 text-start">
+                <div class="mb-2">
+                    <span th:if="${proposal.author != null}" th:text="${proposal.author.username}"></span>
+                </div>
+				<div th:text="${proposal.updateDate != null ? '작성일 : ' + #temporals.format(proposal.updateDate, 'yyyy-MM-dd HH:mm') + ' (수정됨)' : '작성일 : ' + #temporals.format(proposal.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+            </div>
+		</div>
+		<div class="my-3 crud-btn">
+		    <a th:href="@{|/proposal/update/${proposal.id}|}" class="btn btn-sm btn-outline-secondary"
+		        sec:authorize="isAuthenticated()"
+		        th:if="${proposal.author != null and #authentication.getPrincipal().getUsername() == proposal.author.username}"
+		        th:text="수정"></a>
+			<a href="javascript:void(0);" th:data-uri="@{|/proposal/delete/${proposal.id}|}"
+		      class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+		      th:if="${proposal.author != null and #authentication.getPrincipal().getUsername() == proposal.author.username}"
+		      th:text="삭제"></a>
+		</div>
+		<br>
         <section class="proposal-answers">
             <ul>
-                <li th:each="answer : ${proposal.answerList}" th:text="${answer.content}"></li>
+                <li th:each="answer : ${proposal.answerList}">
+                    <p th:text="${answer.content}"></p>
+                    <div class="d-flex justify-content-end">
+                        <div class="badge bg-light text-dark p-2 text-start">
+                            <div class="mb-2">
+                                <span th:if="${answer != null and answer.author != null}" th:text="${answer.author.username}"></span>
+                            </div>
+							<div th:text="${proposal.updateDate != null ? '작성일 : ' + #temporals.format(proposal.updateDate, 'yyyy-MM-dd HH:mm') + ' (수정됨)' : '작성일 : ' + #temporals.format(proposal.createDate, 'yyyy-MM-dd HH:mm')}"></div>
+                        </div>
+                    </div>
+					<div class="my-3 crud-btn">
+					    <a th:href="@{|/answer/update/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
+					        sec:authorize="isAuthenticated()"
+					        th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+					        th:text="수정"></a>
+						<a href="javascript:void(0);" th:data-uri="@{|/answer/delete/${answer.id}|}"
+						    class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
+						    th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+						    th:text="삭제"></a>
+					</div>
+                </li>
             </ul>
         </section>
         <section class="proposal-form">
             <form th:action="@{|/answer/create/${proposal.id}|}" th:object="${answerForm}" method="post">
-                <textarea class="answer" th:field="*{content}" id="answerContent" rows="10" placeholder="답변을 작성하세요..."></textarea>
+                <textarea sec:authorize="isAnonymous()" class="answer" th:field="*{content}" id="answerContent" rows="10" placeholder="답변을 작성하세요"></textarea>
+                <textarea sec:authorize="isAuthenticated()" class="answer" th:field="*{content}" id="answerContent" rows="10" placeholder="답변을 작성하세요"></textarea>
                 <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-message"></p>
-				<div class="register">
-				    <input class="btn btn-primary" type="submit" value="등록하기">
-				</div>
+                <div class="register">
+                    <input class="btn btn-primary" type="submit" value="등록하기">
+                </div>
             </form>
         </section>
     </div>
+	<script layout:fragment="script" type='text/javascript'>
+		const delete_elements = document.getElementsByClassName("delete");
+		Array.from(delete_elements).forEach(function(element) {
+		    element.addEventListener('click', function() {
+		        if(confirm("정말로 삭제하시겠습니까?")) {
+		            location.href = this.dataset.uri;
+		        };
+		    });
+		});
+		
+		
+	</script>
 </html>

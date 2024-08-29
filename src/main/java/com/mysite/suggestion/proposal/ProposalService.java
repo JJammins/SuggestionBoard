@@ -4,12 +4,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.mysite.suggestion.DataNotFoundException;
+import com.mysite.suggestion.user.SiteUser;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,8 +18,8 @@ public class ProposalService {
 	
 	private final ProposalRepository proposalRepository;
 	
-	public List<Proposal> getList(){
-		return this.proposalRepository.findAll();
+	public List<Proposal> getList() {
+	    return this.proposalRepository.findAll(Sort.by(Sort.Direction.DESC, "createDate"));
 	}
 	
 	public Proposal getProposal(Long id) {
@@ -32,12 +31,13 @@ public class ProposalService {
 		}
 	}
 	
-	public void createProposal(String classification, String subject, String content) {
+	public void createProposal(String classification, String subject, String content, SiteUser user) {
 		Proposal p = new Proposal();
 		p.setClassification(classification);
 		p.setSubject(subject);
 		p.setContent(content);
 		p.setCreateDate(LocalDateTime.now());
+		p.setAuthor(user);
 		this.proposalRepository.save(p);
 	}
 	
@@ -53,8 +53,24 @@ public class ProposalService {
 		return this.proposalRepository.findByClassification(classification);
 	}
 	
-	public Page<Proposal> getList(int page){
-		Pageable pageable = PageRequest.of(page, 1);
-		return this.proposalRepository.findAll(pageable);
+	// 수정
+	public void updateProposal(Proposal proposal, String subject, String content) {
+		proposal.setSubject(subject);
+		proposal.setContent(content);
+		proposal.setUpdateDate(LocalDateTime.now());
+		this.proposalRepository.save(proposal);
 	}
+	
+	// 삭제
+	public void delete(Proposal proposal) {
+		this.proposalRepository.delete(proposal);
+	}
+	
+//	public Page<Proposal> getList(int page){
+////		List<Sort.Order> sorts = new ArrayList<>();
+////		sorts.add(Sort.Order.desc("createDate"));
+//		//Sort.by(sorts)
+//		Pageable pageable = PageRequest.of(page, 5);
+//		return this.proposalRepository.findAll(pageable);
+//	}
 }
