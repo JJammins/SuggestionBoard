@@ -1,17 +1,27 @@
-<div th:fragment="navbarFragment" class="top-bar">
-	<div class="title">
+<nav th:fragment="navbarFragment" class="navbar navbar-expand-lg navbar-light border-bottom">
+    <div class="container-fluid">
 		<a th:href="@{/main}">
 			<img src="http://localhost:8080/%EB%AF%B8%EB%9E%98%EC%9C%B5%ED%95%A9%EA%B5%90%EC%9C%A1%EC%9B%90.png" alt="logo" width="250">
 		</a>
-	</div>
-	<div class="list">
-		<a th:href="@{/proposal/list}">건의목록</a>
-	</div>
-	<div class="write">
-		<a th:href="@{/proposal/create}">건의하기</a>
-	</div>
-	<div>
-		<a class="login" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
-        <a class="login" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
-	</div>
-</div>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/proposal/list}">건의목록</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" th:href="@{/proposal/create}">건의하기</a>
+				</li>
+			</ul>
+			<ul class="navbar-nav ml-auto mb-2 mb-lg-0">
+			    <li class="nav-item">
+			        <a class="nav-link" sec:authorize="isAnonymous()" th:href="@{/user/login}">로그인</a>
+			        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/user/logout}">로그아웃</a>
+			    </li>
+			</ul>
+        </div>
+    </div>
+</nav>

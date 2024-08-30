@@ -71,7 +71,7 @@ public class ProposalController {
     @GetMapping("/update/{id}")
     public String questionModify(ProposalForm proposalForm, @PathVariable("id") Long id, Principal principal) {
     	Proposal proposal = this.proposalService.getProposal(id);
-        if(!proposal.getAuthor().getUsername().equals(principal.getName())) {
+        if(!proposal.getAuthor().getUserID().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         proposalForm.setSubject(proposal.getSubject());
@@ -86,7 +86,7 @@ public class ProposalController {
 			return "proposal_form";
 		}
 		Proposal proposal = this.proposalService.getProposal(id);
-		if(!proposal.getAuthor().getUsername().equals(principal.getName())) {
+		if(!proposal.getAuthor().getUserID().equals(principal.getName())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
 		}
 		this.proposalService.updateProposal(proposal, proposalForm.getSubject(), proposalForm.getContent());
@@ -98,11 +98,11 @@ public class ProposalController {
 	@GetMapping("/delete/{id}")
 	public String proposalDelete(Principal principal, @PathVariable("id") Long id) {
 		Proposal proposal = this.proposalService.getProposal(id);
-		if(!proposal.getAuthor().getUsername().equals(principal.getName())) {
+		if(!proposal.getAuthor().getUserID().equals(principal.getName()) && !principal.getName().equals("admin")) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
 		}
 		this.proposalService.delete(proposal);
-		return "redirect:/";
+		return "redirect:/proposal/list";
 	}
 	
 	@GetMapping("/answered")

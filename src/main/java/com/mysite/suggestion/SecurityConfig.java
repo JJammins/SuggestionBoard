@@ -23,6 +23,7 @@ public class SecurityConfig {
                 .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
             .formLogin((formLogin) -> formLogin
             	.loginPage("/user/login")
+            	.usernameParameter("userID")
             	.defaultSuccessUrl("/"))
             .logout((logout) -> logout
             		.logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))

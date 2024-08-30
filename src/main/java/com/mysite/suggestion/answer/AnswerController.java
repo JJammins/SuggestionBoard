@@ -34,7 +34,7 @@ public class AnswerController {
 	private final AnswerService answerService;
 	private final UserService userService;
 	
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@PostMapping("/create/{id}")
 	public String createAnswer(Model model, @PathVariable("id") Long id, @Valid AnswerForm answerForm, BindingResult bindingResult, Principal principal) {
 		Proposal proposal = this.proposalService.getProposal(id);
@@ -47,18 +47,18 @@ public class AnswerController {
 		return String.format("redirect:/proposal/detail/%s", id);
 	}
 	
-	@PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@GetMapping("update/{id}")
 	public String answerUpdate(AnswerForm answerForm, @PathVariable("id") Long id, Principal principal) {
 		Answer answer = this.answerService.getAnswer(id);
-		if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+		if (!answer.getAuthor().getUserID().equals(principal.getName())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
 		}
 		answerForm.setContent(answer.getContent());
 		return "answer_form";
 	}
 	
-    @PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/update/{id}")
     public String answerModify(@Valid AnswerForm answerForm, BindingResult bindingResult,
             @PathVariable("id") Long id, Principal principal) {
@@ -66,50 +66,21 @@ public class AnswerController {
             return "answer_form";
         }
         Answer answer = this.answerService.getAnswer(id);
-        if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+        if (!answer.getAuthor().getUserID().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
         }
         this.answerService.update(answer, answerForm.getContent());
         return String.format("redirect:/proposal/detail/%s", answer.getProposal().getId());
     }
 	
-    @PreAuthorize("isAuthenticated()")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/delete/{id}")
     public String answerDelete(Principal principal, @PathVariable("id") Long id) {
         Answer answer = this.answerService.getAnswer(id);
-        if (!answer.getAuthor().getUsername().equals(principal.getName())) {
+        if (!answer.getAuthor().getUserID().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제권한이 없습니다.");
         }
         this.answerService.delete(answer);
         return String.format("redirect:/proposal/detail/%s", answer.getProposal().getId());
-    }
-    
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/update/ajax/{id}")
-    public ResponseEntity<Map<String, Object>> answerModifyAjax(
-            @PathVariable("id") Long id, 
-            @RequestBody Map<String, String> requestBody, 
-            Principal principal) {
-
-        // 요청된 답변 내용을 추출합니다.
-        String updatedContent = requestBody.get("content");
-
-        // 해당 ID의 답변을 가져옵니다.
-        Answer answer = this.answerService.getAnswer(id);
-        
-        // 답변 작성자가 현재 로그인한 사용자와 일치하는지 확인합니다.
-        if (!answer.getAuthor().getUsername().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정권한이 없습니다.");
-        }
-
-        // 답변 내용을 업데이트합니다.
-        this.answerService.update(answer, updatedContent);
-
-        // 성공적으로 수정된 경우, 성공 상태와 메시지를 반환합니다.
-        Map<String, Object> response = new HashMap<>();
-        response.put("success", true);
-        response.put("message", "답변이 성공적으로 수정되었습니다.");
-        
-        return ResponseEntity.ok(response);
     }
 }

@@ -7,57 +7,27 @@ body{
 }
 
 /* 네비게이션바 */
-.top-bar {
-    height: 80px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.navbar {
     background-color: #3e4e40;
-    color: white;
-    flex-wrap: nowrap;
 }
 
-.title{
-    margin-right: 20px;
-    padding-left: 20px;
-    padding-bottom: 10px;
-}
-
-.list{
-	font-size: 18px;
-}
-
-.write{
-    margin-right: auto;
-    font-size: 18px;
-}
-
-.login {
-    font-size: 18px;
-    margin-right: 20px;
+.nav-link{
+	color: white;
+	margin-left: 20px;
 }
 
 a {
     text-decoration: none; color: inherit;
-    margin-left: 20px;
-}
-
-#nick {
-    text-decoration: underline; color: inherit;
-}
-
-table {
-	width: 70%;
 }
 
 /* 건의목록 css */
 .proposal-list{
-	text-align: center;
 	margin: 0 auto;
+	text-align: center;
 }
 
 .table_list{
-	width: 70%;
+	width: 80%;
 	margin: 0 auto;
 }
 
@@ -90,19 +60,9 @@ table {
     font-weight: bold;
 }
 
-/* 건의하기 css */
-html {
-    height: 100vh;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-}
-
-/* 폼 스타일 */
-.form-container {
-    width: 60%;
+/* 로그인페이지 CSS */
+.login-container, .signup-form{
+    width: 350px;
     margin: 70px auto;
     padding: 20px;
     border: 1px solid #dee2e6;
@@ -111,9 +71,34 @@ body {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-.test{
-	margin: 0 auto;
+.login-label, .signup-label{
+	text-align: center;
+}
+
+.user-id, .user-name, .user-password, .user-password-confirm, .user-email{
 	width: 80%;
+	margin: 0 auto;
+}
+
+.login-btn-group, .signup-btn-group{
+	display: flex;
+	justify-content: center;
+}
+
+.login-btn{
+	margin-right: 10px;
+}
+
+/* 건의하기 css */
+/* 폼 스타일 */
+.form-container {
+    width: 85%;
+    margin: 70px auto;
+    padding: 20px;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
 .one-line {
@@ -293,9 +278,13 @@ textarea:focus {
     border-color: rgb(192, 192, 192);
 }
 
-/* 분류별 건의보기 css */
 .button-group{
 	margin: 50px 0px;
+	text-align: center;
+}
+
+.classification-label{
+	margin: 0 auto;
 }
 
 .classification-group{
@@ -309,10 +298,11 @@ textarea:focus {
 }
 
 .c-button{
+	width: 100px;
 	height: 50px;
 	background-color:  #3e4e40;
-	border-radius: 10%;
 	color: white;
+	border: 1px solid white;
 }
 
 /* 기본 버튼 스타일 */
@@ -337,9 +327,9 @@ textarea:focus {
 }
 
 .bottom {
-  position: relative; /* 기본값은 static이므로, 굳이 명시하지 않아도 됨 */
+  position: relative;
   width: 100%;
-  margin-top: 20px; /* 페이지의 다른 내용과 조금 떨어져 있도록 간격을 줄 수 있음 */
+  margin-top: 20px; 
 }
 
 .page-bottom {
@@ -351,7 +341,12 @@ textarea:focus {
 .bottom-title{
 	color: black;
 }
+
 .bottom_span {
   display: block;
   margin-bottom: 5px;
+}
+
+.page-item{
+	cursor: pointer;
 }

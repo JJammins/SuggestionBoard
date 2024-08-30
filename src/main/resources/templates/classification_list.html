@@ -1,14 +1,14 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="proposal-list">
-	<div class="button-group">
-		<h3>분류</h3>
-	    <div class="classification-group">
-	        <button class="c-button" type="button" data-classification="시설/장비">시설/장비</button>
-	        <button class="c-button" type="button" data-classification="구매신청">구매신청</button>
-	        <button class="c-button" type="button" data-classification="개방신청">개방신청</button>
-	        <button class="c-button" type="button" data-classification="취업상담">취업상담</button>
-	    </div>
-	</div>
+    <div class="button-group">
+        <h3>분류</h3>
+        <div class="classification-group">
+            <button class="c-button" type="button" data-classification="시설/장비">시설/장비</button>
+            <button class="c-button" type="button" data-classification="구매신청">구매신청</button>
+            <button class="c-button" type="button" data-classification="개방신청">개방신청</button>
+            <button class="c-button" type="button" data-classification="취업상담">취업상담</button>
+        </div>
+    </div>
 
     <div class="table_list">
         <table class="table">
@@ -17,21 +17,106 @@
                     <th scope="col">분류</th>
                     <th scope="col">제목</th>
                     <th scope="col">작성일</th>
+                    <th scope="col">작성자</th>
                     <th scope="col">답변여부</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="proposal: ${classificationList}">
-                    <td th:text="${proposal.classification}"></td>
-                    <td>
-                        <a th:href="@{|/proposal/detail/${proposal.id}|}" th:text="${proposal.subject}"></a>
-                    </td>
-                    <td th:text="${proposal.createDate}"></td>
-                    <td class="status" th:text="${proposal.isAnswered ? '완료' : '대기'}"></td>
-                </tr>
+                <!-- 테이블 내용은 JavaScript로 동적으로 생성됩니다 -->
             </tbody>
         </table>
     </div>
+
+    <nav>
+        <ul class="pagination pagination-sm justify-content-center">
+            <!-- 페이지네이션은 JavaScript로 동적으로 생성됩니다 -->
+        </ul>
+    </nav>
+
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+    var initialProposals = /*[[${classificationList}]]*/ [];
+    /*]]>*/
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const buttons = document.querySelectorAll('.button-group button');
+        const tableContainer = document.querySelector(".table");
+        const tbody = tableContainer.querySelector("tbody");
+        const paginationList = document.querySelector(".pagination");
+
+        const eachPage = 5; // 페이지 당 게시글 수
+        let currentPage = {};
+        let currentProposals = initialProposals;
+
+        function initializePagination(proposals) {
+            currentPage = {};
+            proposals.forEach(function(item, index) {
+                const pageNumber = Math.floor(index / eachPage);
+                if (!currentPage[pageNumber]) {
+                    currentPage[pageNumber] = [];
+                }
+                currentPage[pageNumber].push(item);
+            });
+        }
+
+        function displayTable(page, pageNumber) {
+            tbody.innerHTML = '';
+            page[pageNumber].forEach(function(proposal) {
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${proposal.classification}</td>
+                    <td><a href="/proposal/detail/${proposal.id}">${proposal.subject}</a></td>
+                    <td>${new Date(proposal.createDate).toLocaleDateString()}</td>
+                    <td>${proposal.author ? proposal.author.username : '익명'}</td>
+                    <td class="status">${proposal.answered ? '완료' : '대기'}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function updatePagination() {
+            const pageCnt = Object.keys(currentPage).length;
+            paginationList.innerHTML = "";
+            for (let i = 0; i < pageCnt; i++) {
+                const li = document.createElement("li");
+                li.classList.add("page-item");
+                if (i === 0) li.classList.add("active");
+                li.innerHTML = `<span class="page-link">${i + 1}</span>`;
+                li.addEventListener("click", () => handleClickPage(i));
+                paginationList.appendChild(li);
+            }
+        }
+
+        function handleClickPage(pageNumber) {
+            displayTable(currentPage, pageNumber);
+            document.querySelectorAll('.page-item').forEach((item, index) => {
+                item.classList.toggle('active', index === pageNumber);
+            });
+        }
+
+        // 초기 페이지네이션 설정
+        initializePagination(currentProposals);
+        displayTable(currentPage, 0);
+        updatePagination();
+
+        // 분류 버튼 이벤트 리스너
+        buttons.forEach(button => {
+            button.addEventListener('click', function() {
+                const classification = this.getAttribute('data-classification');
+                fetch(`/proposal/classification?classification=${classification}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        currentProposals = data;
+                        initializePagination(currentProposals);
+                        displayTable(currentPage, 0);
+                        updatePagination();
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    });
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             console.log('DOMContentLoaded');

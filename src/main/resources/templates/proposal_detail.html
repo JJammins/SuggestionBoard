@@ -17,11 +17,11 @@
 		<div class="my-3 crud-btn">
 		    <a th:href="@{|/proposal/update/${proposal.id}|}" class="btn btn-sm btn-outline-secondary"
 		        sec:authorize="isAuthenticated()"
-		        th:if="${proposal.author != null and #authentication.getPrincipal().getUsername() == proposal.author.username}"
+		        th:if="${proposal.author != null and #authentication.getPrincipal().getUsername() == proposal.author.userID}"
 		        th:text="수정"></a>
 			<a href="javascript:void(0);" th:data-uri="@{|/proposal/delete/${proposal.id}|}"
 		      class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
-		      th:if="${proposal.author != null and #authentication.getPrincipal().getUsername() == proposal.author.username}"
+		      th:if="${proposal.author != null and #authentication.getPrincipal().getUsername() == proposal.author.userID or #authorization.expression('hasRole(''ROLE_ADMIN'')')}"
 		      th:text="삭제"></a>
 		</div>
 		<br>
@@ -40,26 +40,28 @@
 					<div class="my-3 crud-btn">
 					    <a th:href="@{|/answer/update/${answer.id}|}" class="btn btn-sm btn-outline-secondary"
 					        sec:authorize="isAuthenticated()"
-					        th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+					        th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.userID}"
 					        th:text="수정"></a>
 						<a href="javascript:void(0);" th:data-uri="@{|/answer/delete/${answer.id}|}"
 						    class="delete btn btn-sm btn-outline-secondary" sec:authorize="isAuthenticated()"
-						    th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
+						    th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.userID or #authorization.expression('hasRole(''ROLE_ADMIN'')')}"
 						    th:text="삭제"></a>
 					</div>
                 </li>
             </ul>
         </section>
-        <section class="proposal-form">
-            <form th:action="@{|/answer/create/${proposal.id}|}" th:object="${answerForm}" method="post">
-                <textarea sec:authorize="isAnonymous()" class="answer" th:field="*{content}" id="answerContent" rows="10" placeholder="답변을 작성하세요"></textarea>
-                <textarea sec:authorize="isAuthenticated()" class="answer" th:field="*{content}" id="answerContent" rows="10" placeholder="답변을 작성하세요"></textarea>
-                <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-message"></p>
-                <div class="register">
-                    <input class="btn btn-primary" type="submit" value="등록하기">
-                </div>
-            </form>
-        </section>
+		<section class="proposal-form">
+		    <!-- 관리자인 경우에만 답글 작성 폼을 표시합니다 -->
+		    <div sec:authorize="hasRole('ROLE_ADMIN')">
+		        <form th:action="@{|/answer/create/${proposal.id}|}" th:object="${answerForm}" method="post">
+		            <textarea class="answer" th:field="*{content}" id="answerContent" rows="10" placeholder="답변을 작성하세요"></textarea>
+		            <p th:if="${#fields.hasErrors('content')}" th:errors="*{content}" class="error-message"></p>
+		            <div class="register">
+		                <input class="btn btn-primary" type="submit" value="등록하기">
+		            </div>
+		        </form>
+		    </div>
+		</section>
     </div>
 	<script layout:fragment="script" type='text/javascript'>
 		const delete_elements = document.getElementsByClassName("delete");

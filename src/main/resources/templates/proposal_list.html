@@ -8,12 +8,17 @@
         <a href="#" class="tab" data-tab="answered">답변완료</a>
         <a th:href="@{/proposal/classification?classification=}" class="tab" data-tab="category">분류별 건의보기</a>
     </div>
-	
-    <div class="table_list">
-		<table class="table">
+	<div class="table_list">
+		<table class="table table-hover">
 		</table>
-    </div>
-	<script th:inline="javascript">
+	</div>
+	
+	<nav>
+	  <ul class="pagination pagination-sm justify-content-center">
+	  </ul>
+	</nav>
+	
+	<script th:inline="javascript">	
 	/*<![CDATA[*/
 	var proposals = /*[[${proposalList}]]*/ [];
 	console.log("proposals", proposals); // 확인용
@@ -41,92 +46,161 @@
 	
 	// <tbody> 생성
 	const tbody = document.createElement("tbody")
-
 	
-	proposals.forEach(function(aProposal){
-		const tr = document.createElement("tr")
-		tr.classList.add("proposal-row")
+	
+	// 페이지 당 게시글 몇 개나 할지 정하고 그만큼씩 페이지를 구분한다
+	const eachPage = 7 // 페이지 당 게시글 수 
+	const currentPage = {}
+	const answeredPage = {}
+	const unansweredPage = {}
+	let answeredCnt = 0
+	let unansweredCnt = 0
+	
+	proposals.forEach(function(item, index){
 		
-		// 분류 
-		const td1 = document.createElement("td")
-		td1.textContent = aProposal.classification
-		tr.append(td1)
-
-		// 제목 
-		const td2 = document.createElement("td")
-		const a1 = document.createElement("a")
-		a1.href = `/proposal/detail/${aProposal.id}`
-		a1.textContent = aProposal.subject
-		td2.append(a1)
-		tr.append(td2)
-		
-		// 작성일
-		const td3 = document.createElement("td")
-		td3.textContent = new Date(aProposal.createDate).toLocaleDateString();
-		tr.append(td3)
-
-		// 작성자
-		const td4 = document.createElement("td");
-		if (aProposal.author && aProposal.author.username) {
-		    td4.textContent = aProposal.author.username;
-		} else {
-		    td4.textContent = "익명"; // 작성자가 없는 경우
+		if(item.answered){
+			if(answeredPage[`${Math.floor(answeredCnt / eachPage)}`]){
+				// 만일 페이지에 콘텐츠가 있으면 
+				answeredPage[`${Math.floor(answeredCnt / eachPage)}`].push(item)
+			}
+			else{
+				answeredPage[`${Math.floor(answeredCnt / eachPage)}`] = [item]
+			}
+			answeredCnt++
+		}else{
+			if(unansweredPage[`${Math.floor(unansweredCnt / eachPage)}`]){
+				// 만일 페이지에 콘텐츠가 있으면 
+				unansweredPage[`${Math.floor(unansweredCnt / eachPage)}`].push(item)
+			}
+			else{
+				unansweredPage[`${Math.floor(unansweredCnt / eachPage)}`] = [item]
+			}
+			unansweredCnt++
 		}
-		tr.append(td4);
 		
-		// 완료 여부
-		const td5 = document.createElement("td")
-		td5.classList.add("status")
-		td5.textContent = aProposal.answered ? '완료' : '대기'
-		tr.append(td5)
-		
-		tbody.append(tr)
+		if(currentPage[`${Math.floor(index / eachPage)}`]){
+			// 만일 페이지에 콘텐츠가 있으면 
+			currentPage[`${Math.floor(index / eachPage)}`].push(item)
+		}
+		else{
+			currentPage[`${Math.floor(index / eachPage)}`] = [item]
+		}
 	})
 	
-	tableContainer.append(tbody)
+	console.log("currentPage", currentPage)
+	console.log("answeredPage", answeredPage)
+	console.log("unansweredPage", unansweredPage)
+
 	
+	function displayTable(page){
+
+		// 구분된 개수를 토대로 페이지네이션 요소를 생성한다
+		const pageCnt = Object.keys(page).length
+		const paginationList = document.querySelector(".pagination")
+		paginationList.innerHTML = ""
+		for(let i = 0; i < pageCnt; i++){
+			const li = document.createElement("li")
+			if(i == 0){ li.classList.add("active") }
+			li.classList.add("page-item")
+	
+			li.addEventListener("click", () => handleClickPage(page, i))	
+			
+			const span = document.createElement("span")
+			span.classList.add("page-link")
+			span.textContent = i + 1
+			li.append(span)
+			paginationList.append(li)
+			
+			const pagings = document.querySelectorAll('.page-item')
+			pagings.forEach(paging => {
+				paging.addEventListener('click', function(event){
+					pagings.forEach(p => p.classList.remove('active'));
+					this.classList.add('active')
+					console.log(pagings)
+				})
+			}) 
+		}
+	}
+	
+	displayTable(currentPage)
+	
+	// 페이지네이션 요소를 클릭했을 때의 작업을 정의한다
+	function handleClickPage(page, number){
+		console.log(page, number)
+		tbody.innerHTML = ''
+		console.log(page[`${number}`])
+		page[`${number}`].forEach(function(aProposal){
+				const tr = document.createElement("tr")
+				tr.classList.add("proposal-row")
+				
+				// 분류 
+				const td1 = document.createElement("td")
+				td1.textContent = aProposal.classification
+				tr.append(td1)
+
+				// 제목 
+				const td2 = document.createElement("td")
+				const a1 = document.createElement("a")
+				a1.href = `/proposal/detail/${aProposal.id}`
+				a1.textContent = aProposal.subject
+				td2.append(a1)
+				tr.append(td2)
+				
+				// 작성일
+				const td3 = document.createElement("td")
+				td3.textContent = new Date(aProposal.createDate).toLocaleDateString();
+				tr.append(td3)
+
+				// 작성자
+				const td4 = document.createElement("td");
+				if (aProposal.author && aProposal.author.username) {
+				    td4.textContent = aProposal.author.username;
+				} else {
+				    td4.textContent = "익명"; // 작성자가 없는 경우
+				}
+				tr.append(td4);
+				
+				// 완료 여부
+				const td5 = document.createElement("td")
+				td5.classList.add("status")
+				td5.textContent = aProposal.answered ? '완료' : '대기'
+				tr.append(td5)
+				
+				tbody.append(tr)
+			})
+			
+			tableContainer.append(tbody)
+	}
+	
+	handleClickPage(currentPage, 0)
 	/*]]>*/
 	</script>
     <script>
     window.addEventListener("load", function() {
-        console.log('DOMContentLoaded');
         const tabs = document.querySelectorAll('.proposal-tabs .tab');
 
         tabs.forEach(tab => {
             tab.addEventListener('click', function(event) {
                 tabs.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
+				
 
                 const tabType = this.getAttribute('data-tab');
                 console.log('Selected tab:', tabType);
-
-                const rows = document.querySelectorAll('.proposal-row');
-
-                rows.forEach(row => {
-                    const statusCell = row.querySelector('.status');
-                    if (statusCell) {
-                        const statusText = statusCell.textContent.trim();
-                        if (tabType === 'unanswered') {
-                            if (statusText === '대기') {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                        } else if (tabType === 'answered') {
-                            if (statusText === '완료') {
-                                row.style.display = '';
-                            } else {
-                                row.style.display = 'none';
-                            }
-                        } else {
-                            row.style.display = '';
-                        }
-                    }
-                });
+				
+				if(tabType == 'answered'){
+					displayTable(answeredPage)
+					handleClickPage(answeredPage, 0)
+				}else if(tabType == 'unanswered'){
+					displayTable(unansweredPage)
+					handleClickPage(unansweredPage, 0)
+				}else{
+				displayTable(currentPage)
+				handleClickPage(currentPage, 0)
+				}
             });
         });
     });
     </script>
-
 </div>
 </html>

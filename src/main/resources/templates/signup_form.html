@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="container my-3">
-	<div style="border: 1px solid black;">
-	    <div class="my-3 border-bottom">
+	<div class="signup-form">  
+	    <div class="my-3 border-bottom signup-label">
 	        <div>
 	            <h4>회원가입</h4>
 	        </div>
@@ -12,30 +12,38 @@
 	            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" style="margin: 0"></p>
 	        </div>
 	
-	        <!-- Username Field -->
-	        <div class="mb-3">
-	            <input type="text" th:field="*{username}" class="form-control" placeholder="ID">
-	            <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+	        <!-- userID Field -->
+	        <div class="mb-3 user-id">
+	            <input type="text" th:field="*{userID}" class="form-control" placeholder="ID">
+	            <span class="error" th:if="${#fields.hasErrors('userID')}" th:errors="*{userID}"></span>
 	        </div>
+			
+			<!-- userID Field -->
+			<div class="mb-3 user-name">
+			    <input type="text" th:field="*{username}" class="form-control" placeholder="Name">
+			    <span class="error" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+			</div>
 	
 	        <!-- Password Fields -->
-	        <div class="mb-3">
+	        <div class="mb-3 user-password">
 	            <input type="password" th:field="*{password1}" class="form-control" placeholder="Password">
 	            <span class="error" th:if="${#fields.hasErrors('password1')}" th:errors="*{password1}"></span>
 	        </div>
-	        <div class="mb-3">
+	        <div class="mb-3 user-password-confirm">
 	            <input type="password" th:field="*{password2}" class="form-control" placeholder="Check Password">
 	            <span class="error" th:if="${#fields.hasErrors('password2')}" th:errors="*{password2}"></span>
 	        </div>
 	
 	        <!-- Email Field -->
-	        <div class="mb-3">
+	        <div class="mb-3 user-email">
 	            <input type="email" th:field="*{email}" class="form-control" placeholder="Email">
 	            <span class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
 	        </div>
 	
 	        <!-- Submit Button -->
-	        <button type="submit" class="btn btn-primary">회원가입</button>
+			<div class="signup-btn-group">
+	        	<button type="submit" class="btn btn-primary">회원가입</button>
+			</div>
 	    </form>
 	</div>
 </div>

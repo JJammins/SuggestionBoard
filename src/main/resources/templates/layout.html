@@ -8,10 +8,49 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" th:href="@{/style.css}">
 	<title>미래융합교육원</title>
+	<style>
+		@media screen and (max-width: 768px) {
+		    .table th:nth-child(3),
+		    .table td:nth-child(3),
+		    .table th:nth-child(4),
+		    .table td:nth-child(4) {
+		        display: none;
+		    }
+			.table {
+				font-size: 10px;
+			}
+			.bottom-title {
+				font-size: 15px;
+			}
+			.bottom_span {
+				font-size: 10px;
+			}
+			.proposal-tabs .tab {
+			    font-size: 9px;
+			}
+			.carousel-inner, .d-block{
+				height: 200px;
+			}
+		    .navbar-logo {
+		        width: 150px; /* 로고 이미지의 너비 조정 */
+		    }
+		    .navbar-nav .nav-link {
+		        font-size: 14px; /* 링크의 폰트 크기 조정 */
+		        padding: 8px; /* 링크의 패딩 조정 */
+		    }
+		    .navbar-toggler {
+		        padding: 0.25rem 0.5rem; /* 토글 버튼의 크기 조정 */
+		        font-size: 1rem; /* 토글 버튼 아이콘 크기 조정 */
+		    }
+		    .navbar {
+		        padding: 0.5rem 1rem; /* 네비게이션 바의 패딩 조정 */
+		    }
+		}
+	</style>
 </head>
 <body>
 <!-- 네비게이션바 -->
-<div th:replace="~{navbar :: navbarFragment}"></div>
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
 <th:block layout:fragment="content">
 </th:block>
@@ -25,7 +64,6 @@
   <hr>
   <div class="page-bottom">
     <h5 class="bottom-title">미래융합교육원</h5>
-    <br>
     <span class="bottom_span">사업자등록번호: 786-99-00923</span>
     <span class="bottom_span">대전시 서구 계룡로 491번길 86 (둔산동 1221번지) ∣ 전화번호: 042-471-9222 ∣ 팩스: 042-471-9223 ∣ 이메일: mcea@mcea.co.kr</span>
   </div>

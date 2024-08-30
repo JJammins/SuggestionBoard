@@ -1,6 +1,9 @@
 package com.mysite.suggestion.user;
 
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
     private final UserService userService;
+    private final UserSecurityService userSecurityService;
 
     @GetMapping("/signup")
     public String signup(UserCreateForm userCreateForm) {
@@ -35,23 +39,27 @@ public class UserController {
         }
         
         try {
-            userService.create(userCreateForm.getUsername(), 
+            userService.create(userCreateForm.getUserID(), userCreateForm.getUsername(),
                     userCreateForm.getEmail(), userCreateForm.getPassword1());
-        }catch(DataIntegrityViolationException e) {
+            UserDetails userDetails = userSecurityService.loadUserByUsername(userCreateForm.getUserID());
+            UsernamePasswordAuthenticationToken auth =
+            		new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        } catch (DataIntegrityViolationException e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
             return "signup_form";
-        }catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
             bindingResult.reject("signupFailed", e.getMessage());
             return "signup_form";
         }
         
-        return "redirect:/";
+        return "redirect:/user/login";
     }
     
     @GetMapping("/login")
     public String login() {
-    	return "login_form";
+        return "login_form";
     }
 }
