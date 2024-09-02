@@ -49,9 +49,10 @@ public class ProposalService {
 		return this.proposalRepository.findByIsAnswered(false);
 	}
 	
-	public List<Proposal> getClassificationList(String classification){
-		return this.proposalRepository.findByClassification(classification);
-	}
+    public List<Proposal> getClassificationList(String classification) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "createDate");
+        return this.proposalRepository.findByClassification(classification, sort);
+    }
 	
 	// 수정
 	public void updateProposal(Proposal proposal, String subject, String content) {

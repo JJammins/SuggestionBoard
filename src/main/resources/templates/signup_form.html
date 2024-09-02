@@ -6,7 +6,7 @@
 	            <h4>회원가입</h4>
 	        </div>
 	    </div>
-	    <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post">
+	    <form th:action="@{/user/signup}" th:object="${userCreateForm}" method="post" autocomplete="off">
 	        <!-- Global Error Message -->
 	        <div th:if="${#fields.hasGlobalErrors()}" class="alert alert-danger" role="alert">
 	            <p th:each="err : ${#fields.globalErrors()}" th:text="${err}" style="margin: 0"></p>

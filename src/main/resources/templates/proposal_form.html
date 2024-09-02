@@ -1,7 +1,7 @@
 <html layout:decorate="~{layout}">
 <div layout:fragment="content" class="form-container">
 	<div class="test">
-	    <form th:object="${proposalForm}" method="post">
+	    <form th:object="${proposalForm}" method="post" autocomplete="off">
 			<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 	        <div class="one-line">
 	            <div class="form-group subject">

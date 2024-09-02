@@ -2,7 +2,7 @@
 <div layout:fragment="content" class="container my-3">
 	<div class="login-container">
 		<h3 class="my-3 border-bottom login-label">로그인</h3>
-	    <form th:action="@{/user/login}" method="post">
+	    <form th:action="@{/user/login}" method="post" autocomplete="off">
 	        <div th:if="${param.error}">
 	            <div class="alert alert-danger">
 	                사용자ID 또는 비밀번호를 확인해 주세요.
