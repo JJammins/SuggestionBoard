@@ -32,6 +32,60 @@
 * AWS LigntSail
 * AWS RDS
 
+## 프론트엔드 화면
+#### 로그인 & 회원가입 페이지
+![image](https://github.com/user-attachments/assets/b21227e7-4f31-4ede-ae42-28df3113f6e0)
+
+
+![image](https://github.com/user-attachments/assets/12269f76-f33a-47da-96d8-a1549bc539fb)
+
+#### 메인
+![image](https://github.com/user-attachments/assets/f1564bca-f10a-4195-a57f-45b43d632282)
+
+#### 건의목록 - 최신순 건의보기
+![image](https://github.com/user-attachments/assets/20c86dc8-d838-4f0f-89ad-f7ad77f37acf)
+
+#### 건의목록 - 답변대기
+![image](https://github.com/user-attachments/assets/52099359-66b9-4ab7-a7ee-19af64f4dd4e)
+
+#### 건의목록 - 답변완료
+![image](https://github.com/user-attachments/assets/7ea0893f-6de9-4263-b6b2-543fbb64dfcc)
+
+#### 건의별 분류보기 - 시설/장비
+![image](https://github.com/user-attachments/assets/de4171cf-cc6d-47ea-a2e4-59637c358eb6)
+
+#### 건의별 분류보기 - 구매신청
+![image](https://github.com/user-attachments/assets/0078f4b0-f3f5-4e8a-b604-45521e3c279c)
+
+#### 건의별 분류보기 - 개방신청
+![image](https://github.com/user-attachments/assets/a017a51d-ee2b-4f0c-bef7-4a56187c5d8c)
+
+#### 건의별 분류보기 - 취업상담
+![image](https://github.com/user-attachments/assets/30c6e1bf-62be-4dad-bf23-91faa1814f28)
+
+#### 건의하기
+![image](https://github.com/user-attachments/assets/f0ea79cd-9c1e-45e3-8a31-b237fe5345a3)
+
+
+## 모바일 버전
+#### 로그인 & 회원가입 페이지
+![image](https://github.com/user-attachments/assets/357a57c2-5d2f-475d-8315-010cff4d2391)
+
+
+![image](https://github.com/user-attachments/assets/5456576d-bed4-4ded-a6cd-082f4b61170c)
+
+#### 메인
+![image](https://github.com/user-attachments/assets/8cadd9f2-5ec7-4eb0-b576-46f8a2f3a93a)
+
+#### 건의목록
+![image](https://github.com/user-attachments/assets/13bfe93f-3d27-474a-acb0-f8ff46f274f9)
+
+#### 분류별 건의보기
+![image](https://github.com/user-attachments/assets/e2587f81-e220-4b08-bb57-4b964496df2f)
+
+#### 건의하기
+![image](https://github.com/user-attachments/assets/73723ae3-8f25-49fc-9756-fbbefc90c43e)
+
 
 ## 프로젝트 후기
 팀프로젝트가 끝난 후 남은 기간동안 짧게 개인프로젝트를 진행하게 되었다.<br>
